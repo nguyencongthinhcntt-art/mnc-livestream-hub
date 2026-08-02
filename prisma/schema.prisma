@@ -1,0 +1,109 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+// Bảng 1: Livestream Portfolio (Phân hệ 5.1)
+model Livestream {
+  id          String   @id @default(cuid())
+  code        String   @unique // Ví dụ: LS-2026-001
+  title       String
+  brand       String
+  platform    String
+  dateTime    DateTime
+  owner       String
+  targetGMV   Float    @default(0)
+  actualGMV   Float    @default(0)
+  status      String   @default("Draft") // Draft, Approved, Preparing, Live, Completed
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  plReport    PLReport?
+  budgets     Budget[]
+  skus        LivestreamSKU[]
+  vouchers    VoucherItem[]
+  
+  // Đồng bộ quan hệ checklists trỏ đúng vào TaskItem
+  checklists  TaskItem[]
+}
+
+model VoucherItem {
+  id           String     @id @default(cuid())
+  livestreamId String
+  livestream   Livestream @relation(fields: [livestreamId], references: [id], onDelete: Cascade)
+  code         String     // VD: MEGA50K, FREESHIP
+  discountType String     // Giảm Tiền Mặt, Giảm %, Quà Tặng (GWP)
+  value        Float      // Mức giảm / Giá trị quà
+  quantity     Int        // Số lượng mã tung ra
+  sponsor      String     // Brand Tài Trợ / Sàn Tài Trợ / Co-sponsor
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+}
+
+model Budget {
+  id           String     @id @default(uuid())
+  livestreamId String
+  livestream   Livestream @relation(fields: [livestreamId], references: [id], onDelete: Cascade)
+  category     String     // Ví dụ: Host/KOL, Studio/Kỹ thuật, Ads/Traffic, Seeding
+  estimatedCost Float     @default(0)
+  actualCost   Float      @default(0)
+  notes        String?
+}
+
+model LivestreamSKU {
+  id             String     @id @default(cuid())
+  livestreamId   String
+  livestream     Livestream @relation(fields: [livestreamId], references: [id], onDelete: Cascade)
+  skuCode        String
+  productName    String
+  originalPrice  Float
+  streamPrice    Float
+  stockAllocated Int
+  role           String     @default("HERO") // HERO (Chủ lực), BAIT (Phễu Traffic), MARGIN (Lợi nhuận)
+  promotionNote  String?
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
+}
+
+// Bảng Checklist công việc (Dùng TaskItem để khớp với logic trang Checklist)
+model TaskItem {
+  id           String     @id @default(cuid())
+  livestreamId String
+  livestream   Livestream @relation(fields: [livestreamId], references: [id], onDelete: Cascade)
+  phase        String     // 'BEFORE' (Trước), 'DURING' (Trong), 'AFTER' (Sau)
+  taskName     String     // Tên công việc
+  assignee     String?    // Người phụ trách
+  isCompleted  Boolean    @default(false)
+
+  // ⚡ BỔ SUNG 2 TRƯỜNG MỚI DƯỚI ĐÂY (Đảm bảo có đủ 2 dấu //):
+  dueDate      DateTime?  // Hạn hoàn thành (Deadline)
+  priority     String     @default("MEDIUM") // 'HIGH' (Khẩn cấp), 'MEDIUM' (Trung bình), 'LOW' (Thấp)
+
+  createdAt    DateTime   @default(now())
+}
+
+// Bảng 3: Báo cáo P&L Performance (Phân hệ 5.4)
+// Bảng P&L & Chỉ số Vận hành
+model PLReport {
+  id             String     @id @default(cuid())
+  livestreamId   String     @unique
+  livestream     Livestream @relation(fields: [livestreamId], references: [id], onDelete: Cascade)
+
+  // Chỉ số tài chính & Đơn hàng
+  targetGmv      Float      @default(0)
+  actualGmv      Float      @default(0)
+  totalOrders    Int        @default(0)
+  conversionRate Float      @default(0)
+
+  // Chỉ số Vận hành & Engagement Real-time
+  peakViewers    Int        @default(0)
+  totalViews     Int        @default(0)
+  avgWatchTime   String     @default("0s")
+
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
+}
