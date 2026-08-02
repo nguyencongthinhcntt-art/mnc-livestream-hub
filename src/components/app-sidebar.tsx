@@ -83,19 +83,7 @@ export function AppSidebar() {
           afterSelectOrganizationUrl="/"
         />
       </div>
-
-      <div className="px-4 pt-4">
-        <div className="relative">
-          <Search className="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-zinc-400" />
-          <input
-            type="search"
-            placeholder="Tìm kiếm chiến dịch..."
-            className="h-9 w-full rounded-lg border border-zinc-200 bg-zinc-50 pr-3 pl-9 text-sm text-zinc-900 placeholder:text-zinc-400 shadow-sm outline-none transition-colors focus:border-zinc-300 focus:bg-white focus:ring-2 focus:ring-zinc-200"
-          />
-        </div>
-      </div>
-
-      <nav className="flex-1 space-y-1 overflow-y-auto px-3 py-4">
+        <nav className="flex-1 space-y-1 overflow-y-auto px-3 py-4">
         <p className="mb-2 px-3 text-xs font-medium tracking-wide text-zinc-500 uppercase">
           Menu
         </p>
