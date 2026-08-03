@@ -73,7 +73,7 @@ export default async function PortfolioPage({ searchParams }: PageProps) {
       </div>
 
       {/* Thẻ thống kê KPI lấp đầy khoảng trống */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         <div className="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm flex items-center justify-between">
           <div>
             <p className="text-xs font-medium text-slate-500 uppercase tracking-wider">Tổng chương trình</p>
@@ -101,18 +101,6 @@ export default async function PortfolioPage({ searchParams }: PageProps) {
           </div>
           <div className="p-3 bg-amber-50 text-amber-600 rounded-xl">
             <Clock size={22} />
-          </div>
-        </div>
-
-        <div className="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm flex items-center justify-between">
-          <div>
-            <p className="text-xs font-medium text-slate-500 uppercase tracking-wider">Tổng GMV Thực Tế</p>
-            <p className="text-2xl font-bold text-emerald-600 mt-1">
-              {totalActualGMV.toLocaleString('vi-VN')} <span className="text-xs font-normal text-slate-400">đ</span>
-            </p>
-          </div>
-          <div className="p-3 bg-emerald-50 text-emerald-600 rounded-xl">
-            <DollarSign size={22} />
           </div>
         </div>
       </div>
