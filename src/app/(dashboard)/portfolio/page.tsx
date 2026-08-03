@@ -123,7 +123,7 @@ export default async function PortfolioPage({ searchParams }: PageProps) {
                 <th className="p-4">Nền tảng</th>
                 <th className="p-4">Thời gian</th>
                 <th className="p-4">Phụ trách</th>
-                <th className="p-4">Mục tiêu vs Thực tế (GMV)</th>
+                <th className="p-4">Mục tiêu (GMV)</th>
                 <th className="p-4 pr-6">Trạng thái</th>
               </tr>
             </thead>
@@ -173,19 +173,9 @@ export default async function PortfolioPage({ searchParams }: PageProps) {
                         </div>
                       </td>
 
-                      <td className="p-4 min-w-[180px]">
-                        <div className="flex justify-between items-baseline mb-1 text-xs">
-                          <span className="font-bold text-slate-900">{actual.toLocaleString('vi-VN')} đ</span>
-                          <span className="text-[11px] text-slate-400">MT: {target.toLocaleString('vi-VN')} đ</span>
-                        </div>
-                        {/* Thanh tiến độ GMV */}
-                        <div className="w-full bg-slate-100 h-1.5 rounded-full overflow-hidden">
-                          <div 
-                            className="bg-indigo-500 h-full rounded-full transition-all duration-500" 
-                            style={{ width: `${percent}%` }}
-                          />
-                        </div>
-                      </td>
+                      <td className="p-4 font-semibold text-slate-900">
+  {target.toLocaleString('vi-VN')} đ
+</td>
 
                       <td className="p-4 pr-6">
                         <StatusSelect id={item.id} initialStatus={item.status} />

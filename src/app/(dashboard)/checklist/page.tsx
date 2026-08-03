@@ -565,53 +565,23 @@ export default async function ChecklistPage({ searchParams }: PageProps) {
     <div className="p-6 md:p-8 space-y-6 max-w-7xl mx-auto font-sans text-slate-800 antialiased">
       
       {/* 1. HEADER CHÍNH CỦA TRANG CHECKLIST */}
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-        <div className="space-y-1">
-          <div className="flex items-center gap-3">
-            <h1 className="text-2xl font-bold text-slate-900 tracking-tight flex items-center gap-2">
-              <ListTodo className="text-indigo-600" size={26} /> Checklist Quản Lý Công Việc
-            </h1>
-            <span className="px-3 py-1 text-xs font-bold rounded-full bg-indigo-50 text-indigo-700 border border-indigo-100">
-              Tiến độ: {completedTasks}/{totalTasks} ({progressPercent}%)
-            </span>
-          </div>
+      <div className="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-sm flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+         <div className="space-y-1">
+           <div className="flex items-center gap-3">
+             <h1 className="text-2xl font-bold text-slate-900 tracking-tight flex items-center gap-2">
+               <ListTodo className="text-indigo-600" size={26} /> Checklist Quản Lý Công Việc
+             </h1>
+             <span className="px-3 py-1 text-xs font-semibold rounded-full bg-indigo-50 text-indigo-700 border border-indigo-100">
+               Tiến độ: {completedTasks}/{totalTasks} ({progressPercent}%)
+             </span>
+           </div>
           <p className="text-sm text-slate-500">Chuẩn hóa quy trình vận hành chi tiết trước, trong và sau phiên Livestream</p>
-        </div>
-      </div>
+         </div>
 
-      {/* 2. BANNER NỔI BẬT: BƯỚC 1 CHỌN PHIÊN LIVESTREAM */}
-      <div className="rounded-2xl border-2 border-indigo-500/40 bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 p-5 shadow-xl text-white relative overflow-hidden">
-        <div className="absolute -right-10 -top-10 w-40 h-40 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none" />
-
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 relative z-10">
-          
-          {/* Thông điệp & Hướng dẫn cho User */}
-          <div className="flex items-start md:items-center gap-3.5">
-            <div className="p-3 bg-indigo-600 rounded-xl text-white shadow-lg shadow-indigo-500/30 flex items-center justify-center shrink-0 mt-1 md:mt-0">
-              <Radio size={22} className="animate-pulse text-indigo-200" />
-            </div>
-            <div>
-              <div className="flex items-center gap-2">
-                <span className="bg-amber-400 text-slate-950 px-2.5 py-0.5 rounded-md text-[10px] font-black uppercase tracking-wider shadow-sm">
-                  Bước 1 Required
-                </span>
-                <h2 className="text-base font-bold text-white">Chọn Phiên Livestream Cần Quản Lý Checklist</h2>
-              </div>
-              <p className="text-xs text-slate-300 mt-1">
-                Vui lòng chọn một phiên livestream cụ thể để xem, tạo mới và cập nhật tiến độ công việc.
-              </p>
-            </div>
-          </div>
-
-          {/* Bộ Chọn Phiên Dropdown */}
-          <div className="w-full md:w-auto min-w-[320px]">
-            {livestreams.length > 0 && (
-              <LivestreamDropdown livestreams={livestreams} selectedId={selectedId} />
-            )}
-          </div>
-
-        </div>
-      </div>
+         {livestreams.length > 0 && (
+           <LivestreamDropdown livestreams={livestreams} selectedId={selectedId} />
+         )}
+       </div>
 
       {!planningData ? (
         <div className="bg-white p-16 rounded-2xl border border-dashed border-slate-300 text-center space-y-3 shadow-xs">
